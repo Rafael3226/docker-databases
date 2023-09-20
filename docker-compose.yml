@@ -29,5 +29,5 @@ services:
       - pgadmin_data:/var/lib/pgadmin
 
 volumes:
-  postgresql-data:
-  pgadmin-data:
+  postgresql_data:
+  pgadmin_data:
