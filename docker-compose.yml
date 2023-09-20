@@ -13,7 +13,7 @@ services:
       - "5432:5432"
     volumes:
       - ./postgresql.conf:/etc/postgresql/postgresql.conf
-      - postgres_data:/var/lib/postgresql/data
+      - postgresql_data:/var/lib/postgresql/data
 
   pg-admin:
     image: dpage/pgadmin4:latest
@@ -25,5 +25,9 @@ services:
     ports:
       - "5050:5050"
 
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+
 volumes:
-  data:
+  postgresql-data:
+  pgadmin-data:
