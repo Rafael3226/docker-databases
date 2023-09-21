@@ -1,14 +1,16 @@
 version: "3.9"
 
 services:
-  postgres:
-    image: postgres:latest
+  db:
+    image: postgres
+    restart: always
     environment:
-      POSTGRES_DB: mydatabase
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
-      LANG: en_US.UTF-8
-      TZ: UTC-4
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    networks:
+      my_network:
+        ipv4_address: ${POSTGRES_IP}
     ports:
       - "5432:5432"
     volumes:
@@ -16,12 +18,15 @@ services:
       - postgresql_data:/var/lib/postgresql/data
 
   pg-admin:
-    image: dpage/pgadmin4:latest
+    image: dpage/pgadmin4
+    restart: always
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@email.com
-      - PGADMIN_DEFAULT_PASSWORD=admin
-      - PGADMIN_LISTEN_PORT=5050
-
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_LISTEN_PORT: ${PGADMIN_LISTEN_PORT}
+    networks:
+      my_network:
+        ipv4_address: ${PGADMIN_IP}
     ports:
       - "5050:5050"
 
@@ -31,3 +36,10 @@ services:
 volumes:
   postgresql_data:
   pgadmin_data:
+
+networks:
+  my_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${SUBNET} # Define the IP address range for the network

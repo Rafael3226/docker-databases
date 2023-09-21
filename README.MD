@@ -58,7 +58,7 @@ This command will stop the containers and also delete the database data. Be caut
 
 You can connect to the PostgreSQL database using your preferred database client, specifying the following credentials:
 
-- Host: `localhost` or the IP address of your machine.
+- Host: `10.0.0.2` or the IP address of your machine.
 - Port: `5432`
 - Username: `myuser` (or your specified username)
 - Password: `mypassword` (or your specified password)
