@@ -73,7 +73,7 @@ pgAdmin4 is a web-based database management tool that you can access in your web
 
 You can log in to pgAdmin4 with the following credentials:
 
-- Email/Username: `pgadmin4@pgadmin.org`
+- Email/Username: `admin@email.com`
 - Password: `admin`
 
 Once logged in, you can set up connections to your PostgreSQL database and manage it through the pgAdmin4 interface.
