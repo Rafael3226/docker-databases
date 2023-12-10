@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:latest
+    restart: always
+    container_name: mysql-container
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      my_network:
+        ipv4_address: ${MYSQL_IP}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: always
+    container_name: phpmyadmin-container
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: mysql
+      PMA_USER: ${MYSQL_USER}
+      PMA_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      my_network:
+        ipv4_address: ${PMA_IP}
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    volumes:
+      - phpmyadmin-data:/sessions
+      - phpmyadmin-config:/etc/phpmyadmin
+
+volumes:
+  mysql-data:
+  phpmyadmin-data:
+  phpmyadmin-config:
+
+networks:
+  my_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: ${SUBNET} # Define the IP address range for the network
